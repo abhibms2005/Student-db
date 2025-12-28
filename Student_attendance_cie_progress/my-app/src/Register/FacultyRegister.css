@@ -1,0 +1,504 @@
+/* Faculty Register Styles */
+.faculty-register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.faculty-register-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  animation: slideUp 0.6s ease-out;
+  position: relative; /* For back button positioning */
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Back Button Styles */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 10px 16px 10px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-3px);
+}
+
+.back-button svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Header Styles */
+.faculty-register-header {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  padding: 50px 30px 40px;
+  text-align: center;
+  position: relative;
+}
+
+/* Circle Logo Container */
+.faculty-register-logo-circle {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 25px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 4px solid white;
+  position: relative;
+  overflow: hidden;
+}
+
+/* For image inside circle */
+.faculty-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* For SVG icon inside circle */
+.faculty-logo-icon {
+  width: 50px;
+  height: 50px;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faculty-logo-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.faculty-register-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.faculty-register-subtitle {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Message Styles */
+.faculty-register-message {
+  margin: 20px 30px 0;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faculty-register-message-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.faculty-register-message-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Form Container */
+.faculty-register-form {
+  padding: 30px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.form-input:hover:not(:focus) {
+  border-color: #9ca3af;
+}
+
+.form-input-error {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.form-input-error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.form-error {
+  display: block;
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+.form-success {
+  display: block;
+  color: #10b981;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* Password Hints */
+.password-hints {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.hint {
+  font-size: 12px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hint::before {
+  content: '○';
+  font-size: 10px;
+}
+
+.hint-valid {
+  color: #10b981;
+}
+
+.hint-valid::before {
+  content: '✓';
+  color: #10b981;
+}
+
+/* Proctor Option */
+.proctor-option {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 30px 0;
+  transition: all 0.3s ease;
+}
+
+.proctor-option:hover {
+  border-color: #c7d2fe;
+  background: #f5f7ff;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.proctor-checkbox {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  accent-color: #4f46e5;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.proctor-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.proctor-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.proctor-icon svg {
+  width: 22px;
+  height: 22px;
+  color: white;
+}
+
+.proctor-text {
+  flex: 1;
+}
+
+.proctor-title {
+  display: block;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.proctor-description {
+  display: block;
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.submit-btn-loading {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Login Link */
+.login-link-container {
+  text-align: center;
+  padding: 20px 30px 30px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.login-link-text {
+  color: #6b7280;
+  font-size: 15px;
+  margin: 0 0 10px;
+}
+
+.login-link {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #3730a3;
+  text-decoration: underline;
+}
+
+.role-note {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  padding: 10px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.role-note strong {
+  color: #4f46e5;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .faculty-register-card {
+    max-width: 100%;
+    border-radius: 16px;
+  }
+  
+  .back-button {
+    top: 15px;
+    left: 15px;
+    padding: 8px 12px 8px 8px;
+    font-size: 14px;
+  }
+  
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .faculty-register-header {
+    padding: 60px 20px 30px; /* More padding at top for back button */
+  }
+  
+  .faculty-register-logo-circle {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+  }
+  
+  .faculty-logo-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .faculty-register-title {
+    font-size: 24px;
+  }
+  
+  .faculty-register-subtitle {
+    font-size: 14px;
+  }
+  
+  .faculty-register-form {
+    padding: 25px;
+  }
+  
+  .faculty-register-message {
+    margin: 15px 20px 0;
+  }
+  
+  .login-link-container {
+    padding: 20px 25px 25px;
+  }
+  
+  .password-hints {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .back-button {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px 6px 6px;
+  }
+  
+  .back-button span:last-child {
+    display: none; /* Hide "Back" text on very small screens */
+  }
+  
+  .back-button svg {
+    margin-right: 0;
+  }
+}

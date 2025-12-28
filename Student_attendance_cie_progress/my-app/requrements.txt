@@ -1,0 +1,4 @@
+react-router-dom
+lucide-react
+npm run lint -- --fix
+recharts
