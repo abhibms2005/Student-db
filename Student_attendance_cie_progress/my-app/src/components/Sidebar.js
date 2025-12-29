@@ -20,20 +20,20 @@ export default function Sidebar() {
 
         {user?.role === "faculty" && (
           <>
-    <Link className="nav-link" to="/faculty/dashboard">Faculty Dashboard</Link>
-    <Link className="nav-link" to="/faculty/progress">Manage Marks</Link>
-    <Link className="nav-link" to="/faculty/reports">Reports & Messaging</Link>
-    <Link className="nav-link" to="/faculty/viewcertificate">View Certificate</Link>
-   </>
-    )}
+            <Link className="nav-link" to="/faculty/dashboard">Faculty Dashboard</Link>
+            <Link className="nav-link" to="/faculty/progress">Manage Marks</Link>
+            <Link className="nav-link" to="/faculty/reports">Reports & Messaging</Link>
+            <Link className="nav-link" to="/faculty/viewcertificate">View Certificate</Link>
+          </>
+        )}
         {user?.role === "proctor" && (
-        <>
-          <Link className="nav-link" to="/proctor/dashboard">Dashboard</Link>
-          <Link className="nav-link" to="/proctor/certificates">Cretificates</Link>
-          <Link className="nav-link" to="/proctor/activitycertificate">Activity Cretificates</Link>
-          <Link className="nav-link" to="/proctor/attendence">Attendence</Link>
-        </>
-      )}
+          <>
+            <Link className="nav-link" to="/proctor/dashboard">Dashboard</Link>
+            <Link className="nav-link" to="/proctor/certificates">Cretificates</Link>
+            <Link className="nav-link" to="/proctor/activitycertificate">Activity Cretificates</Link>
+            <Link className="nav-link" to="/proctor/attendance">Attendance</Link>
+          </>
+        )}
       </nav>
     </aside>
   );

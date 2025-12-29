@@ -11,23 +11,36 @@ const dummyUsers = [
 ];
 
 export function AuthProvider({ children }) {
-  // start with the storage seed student so dashboard data resolves
-  const [user, setUser] = useState(dummyUsers[0]);
+  // initialize from sessionStorage if available; otherwise null
+  const getStoredUser = () => {
+    try {
+      const raw = sessionStorage.getItem("spams_user");
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const [user, setUser] = useState(getStoredUser);
 
   // login: prefer calling local API (storage.js). Fallback to frontend dummy users.
-  async function login(email, password) {
+  async function login(email, password, role = null) {
     try {
-      const res = await api.login(email, password);
+      const res = await api.login(email, password, role);
       // persist user in session so other parts can read
-      try { sessionStorage.setItem("spams_user", JSON.stringify(res.user)); } catch (e) {}
+      try { sessionStorage.setItem("spams_user", JSON.stringify(res.user)); } catch (e) { }
       setUser(res.user);
       return { ok: true, user: res.user };
     } catch (err) {
-      // fallback to dummy users
+      // fallback to dummy users (with role validation)
       const found = dummyUsers.find((u) => u.email === email && u.password === password);
       if (found) {
+        // Validate role if provided
+        if (role && found.role !== role) {
+          return { ok: false, error: `Invalid role. This account is registered as ${found.role}, not ${role}.` };
+        }
         const { password: _p, ...userSafe } = found;
-        try { sessionStorage.setItem("spams_user", JSON.stringify(userSafe)); } catch (e) {}
+        try { sessionStorage.setItem("spams_user", JSON.stringify(userSafe)); } catch (e) { }
         setUser(userSafe);
         return { ok: true, user: userSafe };
       }
@@ -36,6 +49,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
+    try { sessionStorage.removeItem("spams_user"); } catch (e) { }
     setUser(null);
   }
 

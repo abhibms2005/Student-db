@@ -205,7 +205,6 @@ export default function Dashboard() {
                 <div style={{ padding: "10px", background: "#ffedd5", borderRadius: "12px", color: "#ea580c" }}><FiCalendar size={24} /></div>
                 <span style={{ fontWeight: "600", color: "#9a3412" }}>Attendance</span>
               </div>
-              <div style={{ fontSize: "2rem", fontWeight: "800", color: "#9a3412" }}>{performance.attendance}%</div>
               <div style={{ fontSize: "0.9rem", color: "#c2410c", marginTop: "4px", display: "flex", alignItems: "center", gap: "4px", fontWeight: "600" }}>
                 View Details <FiArrowRight />
               </div>

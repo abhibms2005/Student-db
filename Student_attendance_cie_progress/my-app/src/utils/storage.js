@@ -37,7 +37,34 @@ const seed = {
       roll: "CS101",
       email: "alice@example.com",
       proctorId: "p1",
-      activityPoints: 0
+      activityPoints: 10
+    },
+    {
+      id: "s2",
+      role: "student",
+      name: "Bob Smith",
+      roll: "CS102",
+      email: "bob.smith@example.com",
+      proctorId: "p1",
+      activityPoints: 15
+    },
+    {
+      id: "s3",
+      role: "student",
+      name: "Charlie Davis",
+      roll: "CS103",
+      email: "charlie@example.com",
+      proctorId: "p1",
+      activityPoints: 20
+    },
+    {
+      id: "s4",
+      role: "student",
+      name: "Diana Wilson",
+      roll: "CS104",
+      email: "diana@example.com",
+      proctorId: "p1",
+      activityPoints: 5
     }
   ],
 
@@ -76,76 +103,128 @@ const seed = {
   ],
 
   cie_marks: [
-    {
-      studentId: "s1",
-      subjectId: "sub1",
-      cieNo: 1,
-      expected: 50,
-      obtained: 28, // ~56%
-      total: 50,
-      date: "2025-08-01"
-    },
-    {
-      studentId: "s1",
-      subjectId: "sub1",
-      cieNo: 2,
-      expected: 50,
-      obtained: 32, // ~64%
-      total: 50,
-      date: "2025-09-15"
-    },
-    {
-      studentId: "s1",
-      subjectId: "sub2",
-      cieNo: 1,
-      expected: 50,
-      obtained: 25, // 50%
-      total: 50,
-      date: "2025-08-01"
-    }
-    ,
-    {
-      studentId: "s1",
-      subjectId: "sub2",
-      cieNo: 2,
-      expected: 50,
-      obtained: 22, // 44%
-      total: 50,
-      date: "2025-10-10"
-    },
-    {
-      studentId: "s1",
-      subjectId: "sub3",
-      cieNo: 1,
-      expected: 50,
-      obtained: 38, // 76%
-      total: 50,
-      date: "2025-09-01"
-    }
+    // Alice's marks
+    { studentId: "s1", subjectId: "sub1", cieNo: 1, expected: 50, obtained: 28, total: 50, date: "2025-08-01" },
+    { studentId: "s1", subjectId: "sub1", cieNo: 2, expected: 50, obtained: 32, total: 50, date: "2025-09-15" },
+    { studentId: "s1", subjectId: "sub2", cieNo: 1, expected: 50, obtained: 25, total: 50, date: "2025-08-01" },
+    { studentId: "s1", subjectId: "sub2", cieNo: 2, expected: 50, obtained: 22, total: 50, date: "2025-10-10" },
+    { studentId: "s1", subjectId: "sub3", cieNo: 1, expected: 50, obtained: 38, total: 50, date: "2025-09-01" },
+
+    // Bob's marks
+    { studentId: "s2", subjectId: "sub1", cieNo: 1, expected: 50, obtained: 42, total: 50, date: "2025-08-01" },
+    { studentId: "s2", subjectId: "sub1", cieNo: 2, expected: 50, obtained: 45, total: 50, date: "2025-09-15" },
+    { studentId: "s2", subjectId: "sub2", cieNo: 1, expected: 50, obtained: 35, total: 50, date: "2025-08-01" },
+    { studentId: "s2", subjectId: "sub2", cieNo: 2, expected: 50, obtained: 30, total: 50, date: "2025-10-10" },
+    { studentId: "s2", subjectId: "sub3", cieNo: 1, expected: 50, obtained: 48, total: 50, date: "2025-09-01" },
+
+    // Charlie's marks
+    { studentId: "s3", subjectId: "sub1", cieNo: 1, expected: 50, obtained: 35, total: 50, date: "2025-08-01" },
+    { studentId: "s3", subjectId: "sub1", cieNo: 2, expected: 50, obtained: 38, total: 50, date: "2025-09-15" },
+    { studentId: "s3", subjectId: "sub2", cieNo: 1, expected: 50, obtained: 40, total: 50, date: "2025-08-01" },
+    { studentId: "s3", subjectId: "sub2", cieNo: 2, expected: 50, obtained: 43, total: 50, date: "2025-10-10" },
+    { studentId: "s3", subjectId: "sub3", cieNo: 1, expected: 50, obtained: 45, total: 50, date: "2025-09-01" },
+
+    // Diana's marks (below expected - at risk)
+    { studentId: "s4", subjectId: "sub1", cieNo: 1, expected: 50, obtained: 20, total: 50, date: "2025-08-01" },
+    { studentId: "s4", subjectId: "sub1", cieNo: 2, expected: 50, obtained: 25, total: 50, date: "2025-09-15" },
+    { studentId: "s4", subjectId: "sub2", cieNo: 1, expected: 50, obtained: 18, total: 50, date: "2025-08-01" },
+    { studentId: "s4", subjectId: "sub2", cieNo: 2, expected: 50, obtained: 22, total: 50, date: "2025-10-10" },
+    { studentId: "s4", subjectId: "sub3", cieNo: 1, expected: 50, obtained: 28, total: 50, date: "2025-09-01" }
   ],
 
   attendance: [
-    // Hardcoded deterministic data for stability (mocking ~50-60% attendance)
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-01", status: "present" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-03", status: "absent", reason: "Sick" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-06", status: "present" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-09", status: "absent" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-12", status: "present" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-15", status: "present" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-18", status: "absent" },
-    { studentId: "s1", subjectId: "sub1", date: "2024-08-21", status: "present" },
+    // AUGUST 2025 - Alice (s1)
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-01", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-04", status: "absent", reason: "Sick" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-07", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-11", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-14", status: "absent" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-18", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-21", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-25", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-08-28", status: "absent" },
 
-    { studentId: "s1", subjectId: "sub2", date: "2024-08-01", status: "present" },
-    { studentId: "s1", subjectId: "sub2", date: "2024-08-03", status: "present" },
-    { studentId: "s1", subjectId: "sub2", date: "2024-08-06", status: "present" },
-    { studentId: "s1", subjectId: "sub2", date: "2024-08-09", status: "absent" },
-    { studentId: "s1", subjectId: "sub2", date: "2024-08-12", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-02", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-05", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-09", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-12", status: "absent" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-16", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-19", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-23", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-26", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-08-30", status: "present" },
 
-    { studentId: "s1", subjectId: "sub3", date: "2024-08-01", status: "absent" },
-    { studentId: "s1", subjectId: "sub3", date: "2024-08-03", status: "present" },
-    { studentId: "s1", subjectId: "sub3", date: "2024-08-06", status: "absent" },
-    { studentId: "s1", subjectId: "sub3", date: "2024-08-09", status: "absent" },
-    { studentId: "s1", subjectId: "sub3", date: "2024-08-12", status: "present" }
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-03", status: "absent" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-06", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-10", status: "absent" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-13", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-17", status: "absent" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-20", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-24", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-08-27", status: "present" },
+
+    // SEPTEMBER 2025 - Alice (s1)
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-01", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-04", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-08", status: "absent" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-11", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-15", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-18", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-22", status: "absent" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-25", status: "present" },
+    { studentId: "s1", subjectId: "sub1", date: "2025-09-29", status: "present" },
+
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-02", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-06", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-09", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-13", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-16", status: "absent" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-20", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-23", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-27", status: "present" },
+    { studentId: "s1", subjectId: "sub2", date: "2025-09-30", status: "present" },
+
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-03", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-07", status: "absent" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-10", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-14", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-17", status: "absent" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-21", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-24", status: "present" },
+    { studentId: "s1", subjectId: "sub3", date: "2025-09-28", status: "present" },
+
+    // Bob Smith (s2) - Good attendance
+    { studentId: "s2", subjectId: "sub1", date: "2025-08-01", status: "present" },
+    { studentId: "s2", subjectId: "sub1", date: "2025-08-04", status: "present" },
+    { studentId: "s2", subjectId: "sub1", date: "2025-08-07", status: "present" },
+    { studentId: "s2", subjectId: "sub1", date: "2025-08-11", status: "present" },
+    { studentId: "s2", subjectId: "sub2", date: "2025-08-02", status: "present" },
+    { studentId: "s2", subjectId: "sub2", date: "2025-08-05", status: "absent" },
+    { studentId: "s2", subjectId: "sub2", date: "2025-08-09", status: "present" },
+    { studentId: "s2", subjectId: "sub3", date: "2025-08-03", status: "present" },
+    { studentId: "s2", subjectId: "sub3", date: "2025-08-06", status: "present" },
+
+    { studentId: "s2", subjectId: "sub1", date: "2025-09-01", status: "present" },
+    { studentId: "s2", subjectId: "sub1", date: "2025-09-04", status: "present" },
+    { studentId: "s2", subjectId: "sub2", date: "2025-09-02", status: "present" },
+    { studentId: "s2", subjectId: "sub3", date: "2025-09-03", status: "present" },
+
+    // Charlie Davis (s3) - Excellent attendance
+    { studentId: "s3", subjectId: "sub1", date: "2025-08-01", status: "present" },
+    { studentId: "s3", subjectId: "sub1", date: "2025-08-04", status: "present" },
+    { studentId: "s3", subjectId: "sub2", date: "2025-08-02", status: "present" },
+    { studentId: "s3", subjectId: "sub3", date: "2025-08-03", status: "present" },
+    { studentId: "s3", subjectId: "sub1", date: "2025-09-01", status: "present" },
+    { studentId: "s3", subjectId: "sub2", date: "2025-09-02", status: "present" },
+
+    // Diana Wilson (s4) - Poor attendance
+    { studentId: "s4", subjectId: "sub1", date: "2025-08-01", status: "absent" },
+    { studentId: "s4", subjectId: "sub1", date: "2025-08-04", status: "absent" },
+    { studentId: "s4", subjectId: "sub2", date: "2025-08-02", status: "present" },
+    { studentId: "s4", subjectId: "sub2", date: "2025-08-05", status: "absent" },
+    { studentId: "s4", subjectId: "sub3", date: "2025-08-03", status: "present" },
+    { studentId: "s4", subjectId: "sub1", date: "2025-09-01", status: "absent" },
+    { studentId: "s4", subjectId: "sub2", date: "2025-09-02", status: "absent" }
   ],
 
   leaves: [],
@@ -174,6 +253,56 @@ const seed = {
       points: 10,
       file: "/uploads/activity1.pdf",
       status: "pending",
+      rejectReason: ""
+    },
+    {
+      id: "a2",
+      studentId: "s2",
+      type: "Hackathon Winner",
+      date: "2025-12-10",
+      points: 15,
+      file: "/uploads/activity2.pdf",
+      status: "approved",
+      rejectReason: ""
+    },
+    {
+      id: "a3",
+      studentId: "s3",
+      type: "Sports Competition",
+      date: "2025-12-08",
+      points: 12,
+      file: "/uploads/activity3.pdf",
+      status: "pending",
+      rejectReason: ""
+    },
+    {
+      id: "a4",
+      studentId: "s4",
+      type: "Cultural Event",
+      date: "2025-12-05",
+      points: 8,
+      file: "/uploads/activity4.pdf",
+      status: "rejected",
+      rejectReason: "Certificate not clear, please resubmit"
+    },
+    {
+      id: "a5",
+      studentId: "s1",
+      type: "Workshop Participation",
+      date: "2025-12-20",
+      points: 5,
+      file: "/uploads/activity5.pdf",
+      status: "approved",
+      rejectReason: ""
+    },
+    {
+      id: "a6",
+      studentId: "s3",
+      type: "Debate Competition",
+      date: "2025-12-18",
+      points: 10,
+      file: "/uploads/activity6.pdf",
+      status: "approved",
       rejectReason: ""
     }
   ],
@@ -352,6 +481,14 @@ function generateFacultyDashboard(st, user) {
   const pendingCertificates = st.certificates.filter(c => !c.forwarded);
   const pendingReasons = st.reasons.filter(r => !r.facultyReply);
 
+  // Calculate average attendance for faculty subjects
+  const facultyAttendance = st.attendance.filter(a =>
+    facultySubjects.some(sub => sub.id === a.subjectId)
+  );
+  const totalAttendance = facultyAttendance.length;
+  const presentCount = facultyAttendance.filter(a => a.status === "present").length;
+  const avgAttendance = totalAttendance > 0 ? Math.round((presentCount / totalAttendance) * 100) : 0;
+
   return {
     user: faculty,
     role: "faculty",
@@ -363,9 +500,9 @@ function generateFacultyDashboard(st, user) {
     recentMarks: facultyCieMarks.slice(-5),
     dashboardStats: {
       totalSubjects: facultySubjects.length,
-      averageAttendance: 85,
-      pendingAssignments: 3,
-      completedEvaluations: 12
+      averageAttendance: avgAttendance,
+      pendingAssignments: pendingReasons.length,
+      completedEvaluations: facultyCieMarks.length
     }
   };
 }
@@ -524,7 +661,7 @@ function getActivityCertificates() {
 }
 
 // ---------------- Authentication ----------------
-function authenticateUser(email, password) {
+function authenticateUser(email, password, role = null) {
   const st = read();
 
   // Ensure arrays exist
@@ -540,6 +677,14 @@ function authenticateUser(email, password) {
     return {
       success: false,
       message: "Invalid email or password"
+    };
+  }
+
+  // Validate role if provided
+  if (role && user.role !== role) {
+    return {
+      success: false,
+      message: `Invalid role. This account is registered as ${user.role}, not ${role}.`
     };
   }
 

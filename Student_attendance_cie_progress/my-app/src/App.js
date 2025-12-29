@@ -42,7 +42,29 @@ function AppLayout({ children }) {
 }
 
 // Role-protected route
-function RoleRoute({ children }) {
+function RoleRoute({ children, allowed }) {
+  const { user } = useAuth();
+
+  // If no user is logged in, redirect to login
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // If user's role is not in the allowed list, redirect to their correct dashboard
+  if (!allowed.includes(user.role)) {
+    // Redirect to user's actual role dashboard
+    if (user.role === "student") {
+      return <Navigate to="/student/dashboard" replace />;
+    } else if (user.role === "faculty") {
+      return <Navigate to="/faculty/dashboard" replace />;
+    } else if (user.role === "proctor") {
+      return <Navigate to="/proctor/dashboard" replace />;
+    }
+    // Fallback to login
+    return <Navigate to="/login" replace />;
+  }
+
+  // User has correct role, render the protected content
   return children;
 }
 
@@ -73,7 +95,7 @@ export default function App() {
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="reports" element={<Reports />} />
                     <Route path="activity" element={<StudentActivityCertificates />} />
-                    <Route path="*" element={<Navigate to="dashboard" />} />
+                    <Route path="*" element={<Navigate to="/student/dashboard" replace />} />
                   </Routes>
                 </AppLayout>
               </RoleRoute>
@@ -91,7 +113,7 @@ export default function App() {
                     <Route path="progress" element={<FacultyProgress />} />
                     <Route path="reports" element={<FacultyReports />} />
                     <Route path="viewcertificate" element={<ViewCertificates />} />
-                    <Route path="*" element={<Navigate to="dashboard" />} />
+                    <Route path="*" element={<Navigate to="/faculty/dashboard" replace />} />
                   </Routes>
                 </AppLayout>
               </RoleRoute>
@@ -109,7 +131,7 @@ export default function App() {
                     <Route path="certificates" element={<Certificates />} />
                     <Route path="activitycertificate" element={<ActivityCertificates />} />
                     <Route path="attendance" element={<ProctorAttendance />} />
-                    <Route path="*" element={<Navigate to="dashboard" />} />
+                    <Route path="*" element={<Navigate to="/proctor/dashboard" replace />} />
                   </Routes>
                 </AppLayout>
               </RoleRoute>

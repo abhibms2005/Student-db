@@ -13,23 +13,23 @@ export const api = {
   // -------------------------
   // AUTHENTICATION
   // -------------------------
-  async login(email, password) {
+  async login(email, password, role = null) {
     try {
-      const result = store.authenticateUser(email, password);
-      
+      const result = store.authenticateUser(email, password, role);
+
       if (!result.success) {
         throw new Error(result.message || "Invalid credentials");
       }
-      
+
       // Add dashboard data to user object
       const userWithDashboard = {
         ...result.user,
         dashboard: result.dashboard
       };
-      
-      return { 
+
+      return {
         user: userWithDashboard,
-        dashboard: result.dashboard 
+        dashboard: result.dashboard
       };
     } catch (error) {
       throw new Error(error.message || "Login failed");
@@ -43,9 +43,9 @@ export const api = {
     try {
       const s = getStore();
       const user = s.users.find(u => u.id === userId);
-      
+
       if (!user) throw new Error("User not found");
-      
+
       const dashboard = store.generateDashboard(s, user);
       return dashboard;
     } catch (error) {
@@ -65,12 +65,12 @@ export const api = {
   async updateUserProfile(userId, updates) {
     const s = getStore();
     const userIndex = s.users.findIndex(u => u.id === userId);
-    
+
     if (userIndex === -1) throw new Error("User not found");
-    
+
     s.users[userIndex] = { ...s.users[userIndex], ...updates };
     saveStore(s);
-    
+
     return s.users[userIndex];
   },
 
@@ -80,11 +80,11 @@ export const api = {
   async listSubjects(facultyId = null) {
     const s = getStore();
     let subjects = s.subjects || [];
-    
+
     if (facultyId) {
       subjects = subjects.filter(sub => sub.facultyId === facultyId);
     }
-    
+
     return subjects;
   },
 
@@ -135,9 +135,9 @@ export const api = {
   async getStudentById(studentId) {
     const s = getStore();
     const student = s.students.find(s => s.id === studentId);
-    
+
     if (!student) return null;
-    
+
     return {
       ...student,
       cie_marks: s.cie_marks?.filter(m => m.studentId === studentId) || [],
@@ -163,11 +163,11 @@ export const api = {
     const s = getStore();
 
     if (!s.cie_marks) s.cie_marks = [];
-    
+
     // Generate unique ID for the mark
     const markId = `cie_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const markEntry = { id: markId, ...entry };
-    
+
     s.cie_marks.push(markEntry);
     saveStore(s);
 
@@ -177,12 +177,12 @@ export const api = {
   async updateCieMark(markId, updates) {
     const s = getStore();
     const markIndex = s.cie_marks.findIndex(m => m.id === markId);
-    
+
     if (markIndex === -1) throw new Error("Mark not found");
-    
+
     s.cie_marks[markIndex] = { ...s.cie_marks[markIndex], ...updates };
     saveStore(s);
-    
+
     return s.cie_marks[markIndex];
   },
 
@@ -207,7 +207,7 @@ export const api = {
     // Generate unique ID
     const attendanceId = `att_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const attendanceEntry = { id: attendanceId, ...entry };
-    
+
     s.attendance.push(attendanceEntry);
     saveStore(s);
 
@@ -220,18 +220,18 @@ export const api = {
   async listReasons(facultyId = null) {
     const s = getStore();
     if (!s.reasons) s.reasons = [];
-    
+
     let reasons = s.reasons;
-    
+
     if (facultyId) {
       // Get subjects taught by this faculty
       const facultySubjects = s.subjects.filter(sub => sub.facultyId === facultyId);
       const subjectIds = facultySubjects.map(sub => sub.id);
-      
+
       // Filter reasons by subject
       reasons = reasons.filter(reason => subjectIds.includes(reason.subjectId));
     }
-    
+
     return reasons;
   },
 
@@ -249,17 +249,17 @@ export const api = {
   async updateReasonFeedback(reasonId, facultyReply) {
     const s = getStore();
     const reasonIndex = s.reasons.findIndex(r => r.id === reasonId);
-    
+
     if (reasonIndex === -1) throw new Error("Reason not found");
-    
-    s.reasons[reasonIndex] = { 
-      ...s.reasons[reasonIndex], 
+
+    s.reasons[reasonIndex] = {
+      ...s.reasons[reasonIndex],
       facultyReply,
       repliedAt: new Date().toISOString()
     };
-    
+
     saveStore(s);
-    
+
     return s.reasons[reasonIndex];
   },
 
@@ -269,44 +269,44 @@ export const api = {
   async listCertificates(studentId = null, facultyId = null) {
     const s = getStore();
     if (!s.certificates) s.certificates = [];
-    
+
     let certificates = s.certificates;
-    
+
     if (studentId) {
       certificates = certificates.filter(c => c.studentId === studentId);
     }
-    
+
     if (facultyId) {
       certificates = certificates.filter(c => c.facultyId === facultyId);
     }
-    
+
     return certificates;
   },
 
   async addCertificate(certificate) {
     const s = getStore();
-    
+
     if (!s.certificates) s.certificates = [];
-    
+
     // Generate unique ID
     const certId = `cert_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const certEntry = { id: certId, ...certificate };
-    
+
     s.certificates.push(certEntry);
     saveStore(s);
-    
+
     return certEntry;
   },
 
   async updateCertificate(certificateId, updates) {
     const s = getStore();
     const certIndex = s.certificates.findIndex(c => c.id === certificateId);
-    
+
     if (certIndex === -1) throw new Error("Certificate not found");
-    
+
     s.certificates[certIndex] = { ...s.certificates[certIndex], ...updates };
     saveStore(s);
-    
+
     return s.certificates[certIndex];
   },
 
@@ -316,54 +316,54 @@ export const api = {
   async listLeaves(studentId = null, proctorId = null) {
     const s = getStore();
     if (!s.leaves) s.leaves = [];
-    
+
     let leaves = s.leaves;
-    
+
     if (studentId) {
       leaves = leaves.filter(l => l.studentId === studentId);
     }
-    
+
     if (proctorId) {
       // Get students under this proctor
       const proctorStudents = s.students.filter(s => s.proctorId === proctorId);
       const studentIds = proctorStudents.map(s => s.id);
-      
+
       leaves = leaves.filter(l => studentIds.includes(l.studentId));
     }
-    
+
     return leaves;
   },
 
   async addLeave(leave) {
     const s = getStore();
-    
+
     if (!s.leaves) s.leaves = [];
-    
+
     // Generate unique ID
     const leaveId = `leave_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const leaveEntry = { id: leaveId, ...leave, status: 'pending' };
-    
+
     s.leaves.push(leaveEntry);
     saveStore(s);
-    
+
     return leaveEntry;
   },
 
   async updateLeaveStatus(leaveId, status, remarks = null) {
     const s = getStore();
     const leaveIndex = s.leaves.findIndex(l => l.id === leaveId);
-    
+
     if (leaveIndex === -1) throw new Error("Leave not found");
-    
-    s.leaves[leaveIndex] = { 
-      ...s.leaves[leaveIndex], 
+
+    s.leaves[leaveIndex] = {
+      ...s.leaves[leaveIndex],
       status,
       remarks,
       reviewedAt: new Date().toISOString()
     };
-    
+
     saveStore(s);
-    
+
     return s.leaves[leaveIndex];
   },
 
@@ -373,10 +373,10 @@ export const api = {
   async listMessages(userId, role) {
     const s = getStore();
     if (!s.messages) s.messages = [];
-    
+
     // Get messages where user is sender or receiver
-    return s.messages.filter(msg => 
-      msg.senderId === userId || 
+    return s.messages.filter(msg =>
+      msg.senderId === userId ||
       msg.receiverId === userId ||
       (role === 'faculty' && msg.receiverRole === 'faculty') ||
       (role === 'proctor' && msg.receiverRole === 'proctor')
@@ -385,21 +385,21 @@ export const api = {
 
   async sendMessage(message) {
     const s = getStore();
-    
+
     if (!s.messages) s.messages = [];
-    
+
     // Generate unique ID
     const messageId = `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    const messageEntry = { 
-      id: messageId, 
-      ...message, 
+    const messageEntry = {
+      id: messageId,
+      ...message,
       timestamp: new Date().toISOString(),
-      read: false 
+      read: false
     };
-    
+
     s.messages.push(messageEntry);
     saveStore(s);
-    
+
     return messageEntry;
   },
 
@@ -408,8 +408,8 @@ export const api = {
   // -------------------------
   async generateReport(type, filters = {}) {
     const s = getStore();
-    
-    switch(type) {
+
+    switch (type) {
       case 'student_performance':
         return this.generateStudentPerformanceReport(s, filters);
       case 'attendance_summary':

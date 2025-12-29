@@ -22,7 +22,7 @@ export default function ProctorActivityCertificates() {
     };
 
     detectTheme();
-    
+
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'data-theme') {
@@ -44,18 +44,18 @@ export default function ProctorActivityCertificates() {
     const data = store.read();
     const logged = data.users.find(u => u.role === "proctor");
     setProctor(logged);
-    
+
     if (!logged) {
       setIsLoading(false);
       return;
     }
 
-    const pending = (data.certificates || []).filter(c => {
+    const pending = (data.activityCertificates || []).filter(c => {
       const student = data.students.find(s => s.id === c.studentId);
       return student?.proctorId === logged.id && c.status === "pending";
     });
 
-    const previous = (data.certificates || []).filter(c => {
+    const previous = (data.activityCertificates || []).filter(c => {
       const student = data.students.find(s => s.id === c.studentId);
       return student?.proctorId === logged.id && c.status !== "pending";
     });
@@ -79,13 +79,13 @@ export default function ProctorActivityCertificates() {
     }
 
     const data = store.read();
-    const idx = data.certificates.findIndex(c => c.id === selectedCertificate.id);
+    const idx = data.activityCertificates.findIndex(c => c.id === selectedCertificate.id);
     if (idx !== -1) {
-      data.certificates[idx].status = "approved";
-      data.certificates[idx].points = parseInt(points);
+      data.activityCertificates[idx].status = "approved";
+      data.activityCertificates[idx].points = parseInt(points);
 
       // Update student activity points
-      const studentIdx = data.students.findIndex(s => s.id === data.certificates[idx].studentId);
+      const studentIdx = data.students.findIndex(s => s.id === data.activityCertificates[idx].studentId);
       if (studentIdx !== -1) {
         if (!data.students[studentIdx].activityPoints) data.students[studentIdx].activityPoints = 0;
         data.students[studentIdx].activityPoints += parseInt(points);
@@ -104,10 +104,10 @@ export default function ProctorActivityCertificates() {
     }
 
     const data = store.read();
-    const idx = data.certificates.findIndex(c => c.id === selectedCertificate.id);
+    const idx = data.activityCertificates.findIndex(c => c.id === selectedCertificate.id);
     if (idx !== -1) {
-      data.certificates[idx].status = "rejected";
-      data.certificates[idx].rejectReason = reason.trim();
+      data.activityCertificates[idx].status = "rejected";
+      data.activityCertificates[idx].rejectReason = reason.trim();
 
       store.write(data);
       loadCertificates();
@@ -239,7 +239,7 @@ export default function ProctorActivityCertificates() {
                     const data = store.read();
                     const student = data.students.find(s => s.id === cert.studentId);
                     const studentName = student?.name || "Unknown Student";
-                    
+
                     return (
                       <tr key={cert.id}>
                         <td>
@@ -258,17 +258,17 @@ export default function ProctorActivityCertificates() {
                         </td>
                         <td className="date-cell">{cert.date}</td>
                         <td>
-                          <a 
-                            href={cert.file} 
-                            target="_blank" 
-                            rel="noreferrer" 
+                          <a
+                            href={cert.file}
+                            target="_blank"
+                            rel="noreferrer"
                             className="file-link"
                           >
                             📎 View
                           </a>
                         </td>
                         <td>
-                          <button 
+                          <button
                             className="review-btn"
                             onClick={() => handleReviewClick(cert)}
                           >
@@ -315,7 +315,7 @@ export default function ProctorActivityCertificates() {
                     {previousCertificates.map(cert => {
                       const data = store.read();
                       const student = data.students.find(s => s.id === cert.studentId);
-                      
+
                       return (
                         <tr key={cert.id} className={`status-${cert.status}`}>
                           <td>
@@ -347,10 +347,10 @@ export default function ProctorActivityCertificates() {
                             )}
                           </td>
                           <td>
-                            <a 
-                              href={cert.file} 
-                              target="_blank" 
-                              rel="noreferrer" 
+                            <a
+                              href={cert.file}
+                              target="_blank"
+                              rel="noreferrer"
                               className="file-link"
                             >
                               📎 View
@@ -377,7 +377,7 @@ export default function ProctorActivityCertificates() {
                 ✕
               </button>
             </div>
-            
+
             <div className="modal-body">
               <div className="review-student-info">
                 <div className="review-avatar">
@@ -404,7 +404,7 @@ export default function ProctorActivityCertificates() {
                   </span>
                   <span className="detail-value">{selectedCertificate.type}</span>
                 </div>
-                
+
                 <div className="detail-item">
                   <span className="detail-label">
                     📅 Submitted Date
@@ -413,10 +413,10 @@ export default function ProctorActivityCertificates() {
                 </div>
               </div>
 
-              <a 
-                href={selectedCertificate.file} 
-                target="_blank" 
-                rel="noreferrer" 
+              <a
+                href={selectedCertificate.file}
+                target="_blank"
+                rel="noreferrer"
                 className="review-file-link"
               >
                 👁️ View Certificate
@@ -438,7 +438,7 @@ export default function ProctorActivityCertificates() {
                     onChange={(e) => setPoints(e.target.value)}
                   />
                 </div>
-                
+
                 <div className="form-group">
                   <label className="form-label">
                     <span className="label-icon">📝</span>
@@ -452,17 +452,17 @@ export default function ProctorActivityCertificates() {
                     onChange={(e) => setReason(e.target.value)}
                   />
                 </div>
-                
+
                 <div className="review-actions">
-                  <button 
-                    className="review-btn-approve" 
+                  <button
+                    className="review-btn-approve"
                     onClick={handleApprove}
                   >
                     <span>✓</span>
                     Approve Certificate
                   </button>
-                  <button 
-                    className="review-btn-reject" 
+                  <button
+                    className="review-btn-reject"
                     onClick={handleReject}
                   >
                     <span>✗</span>
