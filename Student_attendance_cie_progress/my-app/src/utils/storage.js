@@ -558,7 +558,8 @@ function read() {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) {
-      const finalSeed = { ...seed };
+      // Deep copy seed to avoid reference issues
+      const finalSeed = JSON.parse(JSON.stringify(seed));
       localStorage.setItem(KEY, JSON.stringify(finalSeed));
       return finalSeed;
     }
@@ -569,7 +570,7 @@ function read() {
     // Core Robustness: If critical data (subjects) is missing, force reset to seed
     if (!data.subjects || data.subjects.length === 0) {
       console.warn("Detected corrupted storage (missing subjects), resetting to seed...");
-      const finalSeed = { ...seed };
+      const finalSeed = JSON.parse(JSON.stringify(seed));
       localStorage.setItem(KEY, JSON.stringify(finalSeed));
       return finalSeed;
     }
@@ -577,7 +578,7 @@ function read() {
     return data;
   } catch (error) {
     console.error("Error reading from storage:", error);
-    const fixed = { ...seed };
+    const fixed = JSON.parse(JSON.stringify(seed));
     localStorage.setItem(KEY, JSON.stringify(fixed));
     return fixed;
   }
@@ -586,7 +587,8 @@ function read() {
 function write(data) {
   try {
     const structuredData = ensureDataStructure(data);
-    localStorage.setItem(KEY, JSON.stringify(structuredData));
+    const processed = JSON.stringify(structuredData);
+    localStorage.setItem(KEY, processed);
     return true;
   } catch (error) {
     console.error("Error writing to storage:", error);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import store from "../../utils/storage";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../utils/auth";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, BarChart, Bar
 } from "recharts";
@@ -22,7 +23,9 @@ import {
 // Removing external CSS to prevent conflicts with new premium inline styles
 // import "./Dashboard.css"; 
 
+
 export default function Dashboard() {
+  const { user: authUser } = useAuth();
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -36,8 +39,18 @@ export default function Dashboard() {
       return;
     }
 
-    // Select first student as default and ensure role is set
-    let user = st.students.length ? st.students[0] : st.users.find(u => u.role === "student");
+    // Select the currently logged-in student, or fallback to the first one for robustness
+    let user = null;
+
+    if (authUser) {
+      user = st.students.find(s => s.email === authUser.email);
+    }
+
+    // Fallback if no matching user found (shouldn't happen in normal flow)
+    if (!user) {
+      user = st.students.length ? st.students[0] : st.users.find(u => u.role === "student");
+    }
+
     if (!user) return;
 
     // Safety check: ensure role is defined for generation logic
@@ -51,7 +64,7 @@ export default function Dashboard() {
     store.write(st);
 
     setData(dashboard);
-  }, []);
+  }, [authUser]);
 
   if (!data) return (
     <div style={{ padding: "40px", display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", color: "#6b7280", background: "#f8fafc" }}>
